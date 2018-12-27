@@ -1,0 +1,25 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Mutation {
+    deletePaymentToken(public_hash: String!): DeletePaymentTokenOutput @resolver(class: "\\Magento\\VaultGraphQl\\Model\\Resolver\\DeletePaymentToken") @doc(description:"Delete customer Payment Token")
+}
+
+type DeletePaymentTokenOutput {
+    result: Boolean!
+}
+
+type Query {
+    customerPaymentTokens: CustomerPaymentTokens @doc(description: "List of customer payment tokens") @resolver(class: "\\Magento\\VaultGraphQl\\Model\\Resolver\\PaymentTokens")
+}
+
+type CustomerPaymentTokens {
+    items: [PaymentToken] @doc(description: "An array of payment tokens")
+}
+
+type PaymentToken @doc(description: "Stored payment method available to customer") {
+    public_hash: String! @doc(description: "Token public hash")
+    payment_method_code: String! @doc(description: "Payment method code associated with token")
+    type: String! @doc(description: "Token type [card|account]")
+    details: String @doc(description: "Stored account details")
+}
